@@ -35,3 +35,9 @@ start_vertex = int(input("Enter the starting vertex for DFS: "))
 
 # Perform DFS
 dfs(graph, start_vertex)
+
+# Input :
+# 0, 1
+# 0, 2
+# 1, 4
+# 2, 4

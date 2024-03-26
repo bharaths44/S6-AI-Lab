@@ -43,3 +43,8 @@ start_vertex = int(input("Enter the starting vertex for BFS: "))
 
 # Perform BFS
 bfs(graph, start_vertex)
+# Input :
+# 0, 1
+# 0, 2
+# 1, 4
+# 2, 4
