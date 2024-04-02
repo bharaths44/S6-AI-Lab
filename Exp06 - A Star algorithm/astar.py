@@ -1,13 +1,6 @@
 from collections import deque
 
 class Graph:
-    # example of adjacency list (or rather map)
-    # adjacency_list = {
-    # 'A': [('B', 1), ('C', 3), ('D', 7)],
-    # 'B': [('D', 5)],
-    # 'C': [('D', 12)]
-    # }
-
     def __init__(self, adjacency_list):
         self.adjacency_list = adjacency_list
 
@@ -17,14 +10,13 @@ class Graph:
     # heuristic function with equal values for all nodes
     def h(self, n):
         H = {
-            'S': 11.5,
-            'A': 10.1,
-            'B': 5.8,
-            'C': 3.4,
-            'D': 9.2,
-            'E': 7.1,
-            'F': 3.5,
-            'G': 0
+            'A': 11,
+            'B': 6,
+            'C': 99,
+            'D': 1,
+            'E': 7,
+            'G': 0,
+             
         }
 
         return H[n]
@@ -57,7 +49,7 @@ class Graph:
 
             if n == None:
                 print('Path does not exist!')
-                return None
+                return None, float('inf')
 
             # if the current node is the stop_node
             # then we begin reconstructin the path from it to the start_node
@@ -72,8 +64,10 @@ class Graph:
 
                 reconst_path.reverse()
 
-                print('Path found: {}'.format(reconst_path))
-                return reconst_path
+                print('Path found:', reconst_path)
+                total_cost = g[stop_node]
+                print('Total cost:', total_cost)
+                return reconst_path, total_cost
 
             # for all neighbors of the current node do
             for (m, weight) in self.get_neighbors(n):
@@ -102,17 +96,18 @@ class Graph:
             closed_list.add(n)
 
         print('Path does not exist!')
-        return None
+        return None, float('inf')
     
 adjacency_list = {
-    'S' : [('A',3),('D',4)],
-    'A': [('B', 4), ('D', 5),('S',3)],
-    'B': [('C', 4), ('E', 5),('A',4)],
-    'C': [('B',4)],
-    'D': [('E', 2),('S',4),('A',5)],
-    'E': [('D', 2),('F',4),('B',5)],
-    'F': [('E',4),('G',3.5)],
-    'G': [('F',3.5)]
+    'A': [('B', 2), ('E', 3)],
+    'B': [('C', 1),('G', 9),('A',2)],
+    'C': [('B',1)],
+    'E': [('D', 6),('A',3)],
+    'D': [('G', 1),('E',6)],
+     
 }
 graph1 = Graph(adjacency_list)
-graph1.a_star_algorithm('S', 'G')
+path, total_cost = graph1.a_star_algorithm('A', 'G')
+
+
+# https://www.mygreatlearning.com/blog/a-search-algorithm-in-artificial-intelligence/

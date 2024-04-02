@@ -27,8 +27,9 @@ def update_cost(H, Conditions, weight=1):
 	return least_cost
 
 # Print the shortest path
-def shortest_path(Start,Updated_cost, H):
+def shortest_path(Start, Updated_cost, H):
 	Path = Start
+	cost = H[Start] if Start in H else 0
 	if Start in Updated_cost.keys():
 		Min_cost = min(Updated_cost[Start].values())
 		key = list(Updated_cost[Start].keys())
@@ -39,21 +40,23 @@ def shortest_path(Start,Updated_cost, H):
 		Next = key[Index].split()
 		# ADD TO PATH FOR OR PATH
 		if len(Next) == 1:
-
 			Start =Next[0]
-			Path += '<--' +shortest_path(Start, Updated_cost, H)
+			Path_result, Path_cost = shortest_path(Start, Updated_cost, H)
+			Path += ' --> ' + Path_result
+			cost += Path_cost
 		# ADD TO PATH FOR AND PATH
 		else:
-			Path +='<--('+key[Index]+') '
-
+			Path +=' --> ('+key[Index]+') '
 			Start = Next[0]
-			Path += '[' +shortest_path(Start, Updated_cost, H) + ' + '
-
+			Path_result, Path_cost = shortest_path(Start, Updated_cost, H)
+			Path += '[' + Path_result + ' + '
+			cost += Path_cost
 			Start = Next[-1]
-			Path += shortest_path(Start, Updated_cost, H) + ']'
+			Path_result, Path_cost = shortest_path(Start, Updated_cost, H)
+			Path += Path_result + ']'
+			cost += Path_cost
 
-	return Path
-		
+	return Path, cost
 		
 
 H = {'A': -1, 'B': 5, 'C': 2, 'D': 4, 'E': 7, 'F': 9, 'G': 3, 'H': 0, 'I':0, 'J':0}
@@ -66,8 +69,9 @@ Conditions = {
 }
 # weight
 weight = 1
-# Updated cost
 
 Updated_cost = update_cost(H, Conditions, weight=1)
-
 print('Shortest Path :\n',shortest_path('A', Updated_cost,H))
+
+
+#https://www.geeksforgeeks.org/ao-algorithm-artificial-intelligence/

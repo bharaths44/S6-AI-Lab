@@ -55,7 +55,7 @@ def print_hangman(attempts):
            -----
            |   |
            O   |
-          /|\  |
+          /|\\  |
                |
                |
         -------'''
@@ -64,7 +64,7 @@ def print_hangman(attempts):
            -----
            |   |
            O   |
-          /|\  |
+          /|\\  |
           /    |
                |
         -------'''
@@ -73,8 +73,8 @@ def print_hangman(attempts):
            -----
            |   |
            O   |
-          /|\  |
-          / \  |
+          /|\\  |
+          / \\  |
                |
         -------'''
     ]
