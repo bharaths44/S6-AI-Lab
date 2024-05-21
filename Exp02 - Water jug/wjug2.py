@@ -3,7 +3,7 @@ import math
 def display_state(jug1, jug2):
     print(f"{'JUG 1: ':>11}{jug1:<6} | {'JUG 2: ':>12}{jug2}")
 
-def pour_water(jug1, jug2, capacity1, capacity2):
+def pour_water(jug1, jug2, capacity2):
     pour_amount = min(jug1, capacity2 - jug2)
     jug1 -= pour_amount
     jug2 += pour_amount
@@ -20,7 +20,7 @@ def water_jug_solution(capacity1, capacity2, target_amount):
         elif jug2 == capacity2:
             jug2 = 0
         else:
-            jug1, jug2 = pour_water(jug1, jug2, capacity1, capacity2)
+            jug1, jug2 = pour_water(jug1, jug2, capacity2)
         display_state(jug1, jug2)
 
 first_jug = int(input("Enter the capacity of the first jug: "))

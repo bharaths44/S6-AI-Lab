@@ -1,44 +1,31 @@
-from collections import defaultdict
+def dfs(matrix, start, visited=None):
+    if visited is None:
+        visited = [False] * len(matrix)
+    visited[start] = True
+    print(start, "\t")
 
-# Step 2: Read a graph from the user in the form of a dictionary and list
-def addEdge(adjList, u, v):
-    adjList[u].append(v)
-    adjList[v].append(u)
+    for i in range(len(matrix[start])):
+        if matrix[start][i] == 1 and not visited[i]:
+            dfs(matrix, i, visited)
 
-# Step 3: Initialize a list 'visited'
-visited = []
+def main():
+    num_vertices = int(input("Enter the number of vertices: "))
+    num_edges = int(input("Enter the number of edges: "))
 
-# Step 4: Create a function 'dfs' and perform the following operations:
-def dfs(graph, vertex):
-    # Step 4.1: Mark the current vertex as visited
-    visited.append(vertex)
-    print(vertex,"\t")
+    # Initialize an empty adjacency matrix
+    graph = [[0 for _ in range(num_vertices)] for _ in range(num_vertices)]
 
-    # Step 4.2: Recursively visit all adjacent vertices that have not been visited yet
-    for neighbor in graph[vertex]:
-        if neighbor not in visited:
-            dfs(graph, neighbor)
+    # Take input for each edge
+    for _ in range(num_edges):
+        u, v = map(int, input("Enter edge (u v): ").split())
+        graph[u][v] = 1
+        graph[v][u] = 1  # Assuming undirected graph
 
-# Take input for the number of edges
-num_edges = int(input("Enter the number of edges: "))
+    # Take input for the starting vertex
+    start_vertex = int(input("Enter the starting vertex for DFS: "))
 
-# Initialize an empty adjacency list
-graph = defaultdict(list)
+    # Perform DFS
+    dfs(graph, start_vertex)
 
-# Take input for each edge
-for _ in range(num_edges):
-    u, v = map(int, input("Enter edge (u v): ").split())
-    addEdge(graph, u, v)
-
-# Take input for the starting vertex
-start_vertex = int(input("Enter the starting vertex for DFS: "))
-
-# Perform DFS
-dfs(graph, start_vertex)
-
-# Input :
-# 0, 1
-# 0, 2
-# 1, 3
-# 1, 4
-# 2, 4
+if __name__ == "__main__":
+    main()
