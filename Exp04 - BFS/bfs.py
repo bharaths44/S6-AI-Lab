@@ -1,51 +1,39 @@
-from collections import defaultdict, deque
+from collections import deque
 
-# Step 2: Read a graph from the user in the form of a dictionary and list
-def addEdge(adjList, u, v):
-    adjList[u].append(v)
-    adjList[v].append(u)
+def bfs(matrix, start):
+    visited = [False] * len(matrix)
+    queue = deque([start])
+    visited[start] = True
 
-# Step 3: Initialize two lists 'visited' and 'queue'
-visited = []
-queue = deque()
-
-# Step 4: Create a function 'bfs' and perform the following operations:
-def bfs(graph, start):
-    # Step 4.1: Start by putting any one of the graph’s vertices at the back of the queue.
-    queue.append(start)
-    visited.append(start)
-    
-    # Step 4.4: Continue from Step 4.2 to Step 4.3, until the queue is empty.
     while queue:
-        # Step 4.2: Now take the front item of the queue and add it to the visited list.
         vertex = queue.popleft()
-        print(vertex,"\t")
-        
-        # Step 4.3: Create a list of that vertex’s adjacent nodes. Add those which are not within the visited list to the rear of the queue.
-        for neighbor in graph[vertex]:
-            if neighbor not in visited:
-                visited.append(neighbor)
-                queue.append(neighbor)
+        print(vertex, "\t")
 
-# Take input for the number of edges
+        for i in range(len(matrix[vertex])):
+            if matrix[vertex][i] == 1 and not visited[i]:
+                queue.append(i)
+                visited[i] = True
+
+num_vertices = int(input("Enter the number of vertices: "))
 num_edges = int(input("Enter the number of edges: "))
 
-# Initialize an empty adjacency list
-graph = defaultdict(list)
+# Initialize an empty adjacency matrix
+graph = [[0 for _ in range(num_vertices)] for _ in range(num_vertices)]
 
 # Take input for each edge
 for _ in range(num_edges):
     u, v = map(int, input("Enter edge (u v): ").split())
-    addEdge(graph, u, v)
+    graph[u][v] = 1
+    graph[v][u] = 1  # Assuming undirected graph
 
 # Take input for the starting vertex
 start_vertex = int(input("Enter the starting vertex for BFS: "))
 
 # Perform BFS
 bfs(graph, start_vertex)
-# Input :
-# 0, 1
-# 0, 2
-# 1, 3
-# 1, 4
-# 2, 4
+
+#     addEdge(adjList, 0, 1)
+#     addEdge(adjList, 0, 2)
+#     addEdge(adjList, 1, 3)
+#     addEdge(adjList, 1, 4)
+#     addEdge(adjList, 2, 4)

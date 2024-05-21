@@ -45,7 +45,7 @@ def WaterJugSolver(amt1, amt2, aim):
     if shortest_path is not None:
         print("Shortest solution found in", len(shortest_path)-1, "steps:")
         for step, state in enumerate(shortest_path):
-            print(f"Step {step}: Jug 1 = {state[0]}, Jug 2 = {state[1]}")
+            print(f"Step {step+1}: Jug 1 = {state[0]}, Jug 2 = {state[1]}")
     else:
         print("No solution found.")
 

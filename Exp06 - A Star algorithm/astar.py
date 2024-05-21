@@ -98,16 +98,21 @@ class Graph:
         print('Path does not exist!')
         return None, float('inf')
     
-adjacency_list = {
-    'A': [('B', 2), ('E', 3)],
-    'B': [('C', 1),('G', 9),('A',2)],
-    'C': [('B',1)],
-    'E': [('D', 6),('A',3)],
-    'D': [('G', 1),('E',6)],
-     
-}
-graph1 = Graph(adjacency_list)
-path, total_cost = graph1.a_star_algorithm('A', 'G')
+def main():
+        adjacency_list = {
+            'A': [('B', 2), ('E', 3)],
+            'B': [('C', 1),('G', 9),('A',2)],
+            'C': [('B',1)],
+            'E': [('D', 6),('A',3)],
+            'D': [('G', 1),('E',6)],
+        }
+        graph1 = Graph(adjacency_list)
+        path, total_cost = graph1.a_star_algorithm('A', 'G')
+        print("Path:", path)
+        print("Total cost:", total_cost)
+
+if __name__ == "__main__":
+        main()
 
 
 # https://www.mygreatlearning.com/blog/a-search-algorithm-in-artificial-intelligence/

@@ -1,35 +1,46 @@
-#Q11) Constraint Satisfaction Problem
 import random
 
-def backtrack(assignment, variables, domain, constraints):
+def backtrack_search(assignment, variables, domain, constraints):
+    # If all variables have been assigned, return the assignment
     if len(assignment) == len(variables):
-        return assignment.copy()  # Make a copy of assignment to avoid mutating the original
+        return assignment.copy()
 
-    var = select_unassigned_variable(assignment, variables)
-    if var is None:
+    # Select an unassigned variable
+    unassigned_var = select_unassigned_variable(assignment, variables)
+    if unassigned_var is None:
         return None
 
-    random.shuffle(domain)  # Randomize the order of domain values
+    # Randomize the order of domain values
+    random.shuffle(domain)
+
+    # Try each value in the domain
     for value in domain:
-        assignment[var] = value
-        if is_consistent(var, value, assignment, constraints):
-            result = backtrack(assignment, variables, domain, constraints)
+        assignment[unassigned_var] = value
+
+        # If the assignment is consistent, recursively search
+        if is_consistent(unassigned_var, value, assignment, constraints):
+            result = backtrack_search(assignment, variables, domain, constraints)
             if result is not None:
                 return result
-        assignment[var] = None  # Backtrack
+
+        # If the assignment is not consistent, or if the search did not find a solution, backtrack
+        assignment[unassigned_var] = None
+
     return None
 
 def select_unassigned_variable(assignment, variables):
+    # Return the first variable that is not yet assigned
     for var in variables:
         if var not in assignment:
             return var
     return None
 
-def is_consistent(var, value, assignment, constraints):
+def is_consistent(variable, value, assignment, constraints):
+    # Check if a variable-value assignment is consistent with the constraints
     for constraint in constraints:
-        if var in constraint[0]:
-            related_var = constraint[0][0] if constraint[0][1] == var else constraint[0][1]
-            if related_var in assignment and assignment[related_var] == value:
+        if variable in constraint[0]:
+            related_variable = constraint[0][0] if constraint[0][1] == variable else constraint[0][1]
+            if related_variable in assignment and assignment[related_variable] == value:
                 return False
     return True
 
@@ -37,6 +48,7 @@ if __name__ == "__main__":
     assignment = {}
     variables = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     domain = ['Monday', 'Tuesday', 'Wednesday']
+
     # Define the constraints based on the graph edges
     constraints = [
         (('A', 'B'),),
@@ -51,5 +63,6 @@ if __name__ == "__main__":
         (('E', 'G'),),
         (('F', 'G'),)
     ]
-    solution = backtrack(assignment, variables, domain, constraints)
+
+    solution = backtrack_search(assignment, variables, domain, constraints)
     print(solution)

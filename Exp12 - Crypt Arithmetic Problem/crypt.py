@@ -1,52 +1,45 @@
 def evaluate(word, assigned):
-    num = 0
+    # Create an empty list to hold the digits
+    digits = []
+
+    # Loop over each character in the word
     for char in word:
-        if char in assigned:
-            num = num * 10 + int(assigned[char])
-        else:
-            return None
-    return num
+        # Get the assigned digit for the character. If the character is not in the dictionary, use '0'
+        digit = assigned.get(char, '0')
+        # Add the digit to the list
+        digits.append(digit)
 
-def _solve(word1, word2, result, letters, assigned, solutions):
-    if len(letters) == 0:
-        if evaluate(word1, assigned) + evaluate(word2, assigned) == evaluate(result, assigned): # type: ignore
-            solutions.append(dict(assigned))
-        return
+    # Join the digits together to form a string
+    number_string = ''.join(digits)
 
-    if len(result) > max(len(word1), len(word2)) + 1 or len(letters) > 10:
-        return
+    # Convert the string to an integer
+    result = int(number_string)
 
+    return result
+
+def _solve(word1, word2, result, letters, assigned):
+    if not letters:
+        return evaluate(word1, assigned) + evaluate(word2, assigned) == evaluate(result, assigned)
+    cur_letter = letters.pop()
     for i in range(10):
         num = str(i)
-        if num not in assigned.values():
-            cur_letter = letters.pop()
+        if num not in assigned.values() and not (num == '0' and cur_letter in (word1[0], word2[0], result[0])):
             assigned[cur_letter] = num
-            # Check if the leading digit of a number is zero
-            if (word1[0] in assigned and assigned[word1[0]] == '0') or \
-               (word2[0] in assigned and assigned[word2[0]] == '0') or \
-               (result[0] in assigned and assigned[result[0]] == '0'):
-                letters.append(cur_letter)
-                del assigned[cur_letter]
-                continue
-            _solve(word1, word2, result, letters, assigned, solutions)
+            if _solve(word1, word2, result, letters, assigned):
+                return True
             del assigned[cur_letter]
-            letters.append(cur_letter)
+    letters.append(cur_letter)
+    return False
 
 def solve(word1, word2, result):
     letters = list(set(word1 + word2 + result))  # unique letters in all words
     assigned = {}  # dictionary to hold the assigned letters and their corresponding values
-    solutions = []  # list to hold the solutions
 
-    _solve(word1, word2, result, letters, assigned, solutions)
-
-    print("CRYPTARITHMETIC PUZZLE SOLVER")
-    if solutions:
-        solution = solutions[0]
-        print(solution)
-        # Display in the requested format
-        print(f"{word1}({''.join([solution[char] for char in word1])}) + {word2}({''.join([solution[char] for char in word2])}) = {result}({''.join([solution[char] for char in result])})")
+    if _solve(word1, word2, result, letters, assigned):
+        print(f"Assigned: {assigned}")
+        print(f"{word1}({evaluate(word1, assigned)}) + {word2}({evaluate(word2, assigned)}) = {result}({evaluate(result, assigned)})")
     else:
         print("No solution found.")
 
 # Example usage:
-solve('SEND', 'MORE', 'MONEY')
+solve('BASE', 'BALL', 'GAMES')

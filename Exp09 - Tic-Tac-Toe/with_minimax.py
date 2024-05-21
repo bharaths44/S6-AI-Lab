@@ -19,6 +19,47 @@ def print_board(board):
     print(" ", board[6], " | ", board[7], " | ", board[8])
     print("\n")
 
+
+
+def minimax(board, depth, is_maximizing):
+    if check_win(board, 'X'):
+        return 1
+    elif check_win(board, 'O'):
+        return -1
+    elif is_board_filled(board):
+        return 0
+
+    if is_maximizing:
+        best_score = float('-inf')
+        for i in range(9):
+            if board[i] == ' ':
+                board[i] = 'X'
+                score = minimax(board, depth + 1, False)
+                board[i] = ' '
+                best_score = max(score, best_score)
+        return best_score
+    else:
+        best_score = float('inf')
+        for i in range(9):
+            if board[i] == ' ':
+                board[i] = 'O'
+                score = minimax(board, depth + 1, True)
+                board[i] = ' '
+                best_score = min(score, best_score)
+        return best_score
+
+def find_best_move(board):
+    best_score = float('-inf')
+    move = None
+    for i in range(9):
+        if board[i] == ' ':
+            board[i] = 'X'
+            score = minimax(board, 0, False)
+            board[i] = ' '
+            if score > best_score:
+                best_score = score
+                move = i
+    return move
 def start_game():
     board = create_board()
     players = ['X', 'O']
@@ -28,7 +69,10 @@ def start_game():
     while True:
         print_board(board)
         
-        position = int(input("Enter position number (0-8): "))
+        if current_player == 'X':
+            position = find_best_move(board)
+        else:
+            position = int(input("Enter position number (0-8): "))
         
         if board[position] != ' ':
             print("Spot already taken. Try again.")

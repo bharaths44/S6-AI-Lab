@@ -1,39 +1,40 @@
-def create_magic_square(n):
-    magic_square = [[0] * n for _ in range(n)]
+def create_magic_square(size):
+    # Initialize the magic square with all zeros
+    magic_square = [[0] * size for _ in range(size)]
 
-    # Step 4.1: Place the number 1 in the middle of the first row
-    i, j = 0, n // 2
-    num = 1
+    # Start position for the number 1 is in the middle of the first row
+    row, col = 0, size // 2
 
-    while num <= n * n:
-        magic_square[i][j] = num
-        num += 1
+    # Fill the magic square
+    for number in range(1, size*size + 1):
+        magic_square[row][col] = number
 
-        # Step 4.2: Move to the next position
-        new_i, new_j = (i - 1) % n, (j + 1) % n
+        # Calculate the next position
+        next_row, next_col = (row - 1) % size, (col + 1) % size
 
-        # Step 4.2.1: Check if the next position is available
-        if magic_square[new_i][new_j] == 0:
-            i, j = new_i, new_j
+        # If the next position is available, move to it
+        if magic_square[next_row][next_col] == 0:
+            row, col = next_row, next_col
         else:
-            # Step 4.2.2: Handle when the next position is not available
-            i = (i + 1) % n
+            # If the next position is not available, move down one row
+            row = (row + 1) % size
 
     return magic_square
 
 def display_magic_square(magic_square):
-    print("-" * (4 * len(magic_square) + 3))
+    # Print the magic square in a nicely formatted way
+    border_line = "-" * (4 * len(magic_square) + 3)
     for row in magic_square:
+        print(border_line)
         print("| " + " | ".join(map(str, row)) + " |")
-        print("-" * (4 * len(row) + 3))
+    print(border_line)
 
-# Step 2: Read the order of the matrix from the user and store it in n
-n = int(input("Enter the order of the magic square: "))
+# Get the order of the magic square from the user
+order = int(input("Enter the order of the magic square: "))
 
-# Step 3: Create an n by n array
-magic_square = create_magic_square(n)
+# Create the magic square
+magic_square = create_magic_square(order)
 
-# Step 5: Display the magic square
+# Display the magic square
 print("Magic Square:")
-
 display_magic_square(magic_square)
