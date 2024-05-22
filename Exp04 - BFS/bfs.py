@@ -1,7 +1,7 @@
 from collections import deque
 
-def bfs(matrix, start):
-    visited = [False] * len(matrix)
+def bfs(graph, start):
+    visited = [False] * len(graph)
     queue = deque([start])
     visited[start] = True
 
@@ -9,8 +9,8 @@ def bfs(matrix, start):
         vertex = queue.popleft()
         print(vertex, "\t")
 
-        for i in range(len(matrix[vertex])):
-            if matrix[vertex][i] == 1 and not visited[i]:
+        for i in range(len(graph[vertex])):
+            if graph[vertex][i] == 1 and not visited[i]:
                 queue.append(i)
                 visited[i] = True
 

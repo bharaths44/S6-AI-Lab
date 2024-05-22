@@ -60,6 +60,8 @@ def find_best_move(board):
                 best_score = score
                 move = i
     return move
+
+
 def start_game():
     board = create_board()
     players = ['X', 'O']

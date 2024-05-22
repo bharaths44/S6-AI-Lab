@@ -1,10 +1,10 @@
-def printSolution(board):
+def printSolution():
     for i in range(N):
         for j in range(N):
             print(board[i][j], end=' ')
         print()
 
-def isSafe(board, row, col):
+def isSafe(row, col):
     for i in range(col):
         if board[row][i] == 1:
             return False
@@ -19,33 +19,33 @@ def isSafe(board, row, col):
 
     return True
 
-def solveNQUtil(board, col):
+def solveNQ(col):
     if col >= N:
         return True
 
     for i in range(N):
-        if isSafe(board, i, col):
+        if isSafe(i, col):
             board[i][col] = 1
 
-            if solveNQUtil(board, col + 1):
+            if solveNQ(col + 1):
                 return True
 
             board[i][col] = 0
 
     return False
 
-def solveNQ():
-    global N
+def main():
+    global N, board
     N = int(input("Enter the number of queens: "))
     board = [[0] * N for _ in range(N)]
 
-    if solveNQUtil(board, 0) == False:
+    if solveNQ(0) == False:
         print("Solution does not exist")
         return False
 
     print("Queens placement:")
-    printSolution(board)
+    printSolution()
     return True
 
 if __name__ == "__main__":
-    solveNQ()
+    main()

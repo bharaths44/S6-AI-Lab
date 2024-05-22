@@ -1,12 +1,12 @@
-def dfs(matrix, start, visited=None):
+def dfs(graph, start, visited=None):
     if visited is None:
-        visited = [False] * len(matrix)
+        visited = [False] * len(graph)
     visited[start] = True
     print(start, "\t")
 
-    for i in range(len(matrix[start])):
-        if matrix[start][i] == 1 and not visited[i]:
-            dfs(matrix, i, visited)
+    for i in range(len(graph[start])):
+        if graph[start][i] == 1 and not visited[i]:
+            dfs(graph, i, visited)
 
 def main():
     num_vertices = int(input("Enter the number of vertices: "))
