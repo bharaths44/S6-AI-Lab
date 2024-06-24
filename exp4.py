@@ -24,5 +24,3 @@ for permutation in permutations("0123456789",len(letters)):
     if int(exp1_map)+int(exp2_map)==int(result_map):
         print(f"{exp1} = {exp1_map}\n{exp2} = {exp2_map} \n{result} = {result_map} \n{perm}")
            
-
-
