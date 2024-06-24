@@ -17,6 +17,7 @@ def minimax(depth, node_index, is_maximizing_player):
 		# Recur for left and right children
 		for i in range(2):
 			val = minimax(depth + 1, node_index * 2 + i, False)
+			print(f"Node {node_index} value: {val}")
 			best_value = max(best_value, val)
 			alpha = max(alpha, best_value)
 
@@ -32,11 +33,13 @@ def minimax(depth, node_index, is_maximizing_player):
 		# Recur for left and right children
 		for i in range(2):
 			val = minimax(depth + 1, node_index * 2 + i, True)
+			print(f"Node {node_index} value: {val}")
 			best_value = min(best_value, val)
 			beta = min(beta, best_value)
 
 			# Alpha Beta Pruning
 			if beta <= alpha:
+				print(f"{alpha} {beta}")
 				break
 
 		return best_value
@@ -45,3 +48,6 @@ def minimax(depth, node_index, is_maximizing_player):
 if __name__ == "__main__":
 	values = [int(x) for x in input("Enter the values of nodes: ").split()]
 	print("The optimal value is :", minimax(0, 0, True))
+
+#-1 4 2 6 -3 -5 0 7
+# 3 5 6 9 1 2 0 -1

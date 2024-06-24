@@ -24,16 +24,13 @@ def total_distance(route):
 
 def improve_solution(route):
     """Improve the solution by swapping two cities if it results in a shorter route."""
-    improved = False
     for i in range(len(route)):
         for j in range(i + 1, len(route)):
-            new_route = route.copy()  # Create a copy of the original route
-            new_route[i], new_route[j] = new_route[j], new_route[i]  # Swap cities
-            new_distance = total_distance(new_route)
-            if new_distance < total_distance(route):
-                route = new_route  
-                improved = True
-    return route, improved
+            new_route = route[:]
+            new_route[i], new_route[j] = new_route[j], new_route[i]
+            if total_distance(new_route) < total_distance(route):
+                return new_route, True
+    return route, False
 
 def find_shortest_route(n, start_city):
     """Find the shortest route by repeatedly improving the current route."""
@@ -41,7 +38,6 @@ def find_shortest_route(n, start_city):
     improved = True
     while improved:
         current_route, improved = improve_solution(current_route)
-    
     return current_route
 
 def main():

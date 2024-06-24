@@ -27,10 +27,8 @@ first_jug = int(input("Enter the capacity of the first jug: "))
 second_jug = int(input("Enter the capacity of the second jug: "))
 target_amount = int(input("Enter the target liters of water: "))
 
-if target_amount < first_jug or target_amount < second_jug:
-    if target_amount % math.gcd(first_jug, second_jug) == 0:
+if (target_amount < first_jug or target_amount < second_jug) and \
+target_amount % math.gcd(first_jug, second_jug) == 0:
         water_jug_solution(first_jug, second_jug, target_amount)
-    else:
-        print("This is not possible....")
 else:
-    print("This is not possible....")
+        print("This is not possible....")

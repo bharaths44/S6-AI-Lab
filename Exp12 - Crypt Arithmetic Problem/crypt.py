@@ -42,4 +42,4 @@ def solve(word1, word2, result):
         print("No solution found.")
 
 # Example usage:
-solve('BASE', 'BALL', 'GAMES')
+solve('CROSS', 'ROADS', 'DANGER')
